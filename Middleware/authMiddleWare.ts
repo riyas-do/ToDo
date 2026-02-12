@@ -1,8 +1,11 @@
 import jwt, { type JwtPayload } from 'jsonwebtoken';
 import type {Request, Response, NextFunction} from 'express';
 
-function authenticate(req: Request, res: Response, next: NextFunction){
-    const token = req.headers['authorization']?.split(' ')[1];
+export function authenticate(req: Request, res: Response, next: NextFunction){
+  try{
+    // const token = req.headers['authorization']?.split(' ')[1];
+    const token = req.cookies.token;
+    
     if(!token){
         return res.status(401).send({
             success: false,
@@ -20,10 +23,24 @@ function authenticate(req: Request, res: Response, next: NextFunction){
             message: `Unauthorized user!`
         });
     }
+    req.headers.user = userId;
     return next();
+  }catch(err){
+    if(JSON.stringify(err)?.includes('expired')){
+        return res.status(401).send({
+            success: false,
+            message: 'Token expired'
+        })
+    }
+    return res.status(401).send({
+            success: false,
+            message: `Unauthorized user!`
+    });
+  }
+   
 };
 
-const publicRoutes = ['/register', '/login']
+const publicRoutes = ['/user/register', '/user/login', 'user/oauth2/redirect/google', '/user/refreshToken']
 export default function authHandler(req: Request, res: Response, next: NextFunction){
    if(publicRoutes.includes(req.path)){
      return next();
