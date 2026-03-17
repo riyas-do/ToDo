@@ -26,7 +26,7 @@ export default async function login(req: Request, res: Response){
      const isValid = await bcrypt.compare(password, userData.password)
      if(!isValid){
         return res.status(400).send({
-            success: true, message: `Username or Password is incorrect!`
+            success: false, message: `Username or Password is incorrect!`
         });
      }
      delete userData.password;
