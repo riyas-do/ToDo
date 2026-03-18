@@ -33,15 +33,15 @@ export default async function login(req: Request, res: Response){
      const token = generateJwtToken(userData);
      res.cookie('token', token, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax'
+      secure: true,
+      sameSite: 'none'
      });
      
      const newRefreshToken = generateJwtToken(userData, true);
     res.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
-        secure: false,
-        sameSite: 'lax'
+        secure: true,
+        sameSite: 'none'
     });
 
      return res.status(200).send({
@@ -85,14 +85,14 @@ export async function generateRefreshToken(req: Request, res: Response){
     const token = generateJwtToken(userData);
     res.cookie('token', token, {
         httpOnly: true,
-        secure: false,
-        sameSite: 'lax'
+      secure: true,
+      sameSite: 'none'
     });
     const newRefreshToken = generateJwtToken(userData, true);
     res.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
-        secure: false,
-        sameSite: 'lax'
+      secure: true,
+      sameSite: 'none'
     });
     return res.status(200).send({
         success: true,
@@ -105,13 +105,13 @@ export async function generateRefreshToken(req: Request, res: Response){
 export async function logout(req: Request, res: Response){
     res.clearCookie('token', {
         httpOnly: true,
-        sameSite: 'lax',
-        secure: false
+      secure: true,
+      sameSite: 'none'
     });
     res.clearCookie('refreshToken', {
         httpOnly: true,
-        sameSite: 'lax',
-        secure: false
+      secure: true,
+      sameSite: 'none'
     });
     return res.status(200).send({
         success: true, 
