@@ -26,7 +26,7 @@ export default async function createNewTask(req: Request, res: Response){
            description,
            dueDate: due_date,
            userId: user_id,
-           status
+           status: status === 'true' ? true : false
         }
       })
     }catch(err){
