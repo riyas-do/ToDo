@@ -5,7 +5,7 @@ export default async function createTables() {
 
      CREATE TABLE IF NOT EXISTS users(
        name VARCHAR(64) NOT NULL,
-       id UUID PRIMARY KEY DEFAULT get_random_uuid(),
+       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
        email VARCHAR(255) NOT NULL,
        password TEXT,
        OTP VARCHAR(4),
@@ -13,7 +13,7 @@ export default async function createTables() {
      );
 
      CREATE TABLE IF NOT EXISTS tasks(
-       task_id UUID PRIMARY KEY DEFAULT get_random_uuid(),
+       task_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
        description TEXT NOT NULL,
        created_at TIMESTAMP,
        updated_at TIMESTAMP,
