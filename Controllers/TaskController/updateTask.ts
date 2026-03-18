@@ -6,7 +6,7 @@ export async function updateTask(req: Request, res: Response){
     const response = await client.query(`UPDATE tasks set status = $1 where task_id = $2 returning * `,[status, taskId]);
     return res.status(200).send({
         success: true,
-        message: response
+        message: response?.rows[0]
     });
    }catch(err){
      return res.status(500).send({
