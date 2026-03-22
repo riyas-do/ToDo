@@ -19,7 +19,7 @@ export default async function createTables() {
        updated_at TIMESTAMP,
        due_date TIMESTAMP NOT NULL,
        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-       status VARCHAR(255)
+       status BOOLEAN
      );
     `
   try {
